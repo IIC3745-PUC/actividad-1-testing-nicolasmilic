@@ -19,15 +19,15 @@ class TestPricingService(unittest.TestCase):
             self.service.subtotal_cents([CartItem("A", -10, 1)])
 
     def test_apply_coupon_variations(self):
-        # Sin cupón o vacío
+        # para ver si es cupon o no vaci
         self.assertEqual(self.service.apply_coupon(1000, None), 1000)
         self.assertEqual(self.service.apply_coupon(1000, "  "), 1000)
-        # SAVE10
+        # el save 100
         self.assertEqual(self.service.apply_coupon(1000, "save10"), 900)
-        # CLP2000
+        # 2 Lucas
         self.assertEqual(self.service.apply_coupon(5000, "CLP2000"), 3000)
         self.assertEqual(self.service.apply_coupon(1000, "CLP2000"), 0)
-        # Inválido
+        # invalido
         with self.assertRaises(PricingError):
             self.service.apply_coupon(1000, "INVALIDO")
 
@@ -39,10 +39,10 @@ class TestPricingService(unittest.TestCase):
             self.service.tax_cents(1000, "JP")
 
     def test_shipping_cents_thresholds(self):
-        # Chile: gratis >= 20000
+        # Chile: gratis mayor a 20
         self.assertEqual(self.service.shipping_cents(20000, "CL"), 0)
         self.assertEqual(self.service.shipping_cents(19999, "CL"), 2500)
-        # Internacional
+        # interna
         self.assertEqual(self.service.shipping_cents(100, "US"), 5000)
         self.assertEqual(self.service.shipping_cents(100, "EU"), 5000)
         with self.assertRaises(PricingError):

@@ -38,7 +38,7 @@ class TestCheckoutService(unittest.TestCase):
         self.assertIn("PAYMENT_FAILED:Declined", res)
 
     def test_checkout_success_full_flow(self):
-        # Configuramos éxito en todas las dependencias
+        # este es el éxito en todas las dependencias
         self.pricing.total_cents.return_value = 5000
         self.fraud.score.return_value = 5
         self.payments.charge.return_value = ChargeResult(ok=True, charge_id="ch_999")
@@ -50,7 +50,7 @@ class TestCheckoutService(unittest.TestCase):
         self.email.send_receipt.assert_called_once()
 
     def test_checkout_success_unknown_charge_id(self):
-        # Caso para cubrir la rama donde charge_id es None
+        # el caso para cubrir la rama donde charge_id es None
         self.pricing.total_cents.return_value = 1000
         self.fraud.score.return_value = 0
         self.payments.charge.return_value = ChargeResult(ok=True, charge_id=None)
